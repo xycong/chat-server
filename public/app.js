@@ -1,6 +1,6 @@
 // app.js
 var VideoChat = {
-    socket: io(),
+    socket: io('https://blueberry-cobbler-31135.herokuapp.com:80'),
 
     requestMediaStream: function(event) {
         getUserMedia(
