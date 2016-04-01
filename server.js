@@ -9,8 +9,9 @@ var accountSID = 'AC9f14a9f2f0055718cb19a493809b9a6c';
 var authToken = 'cd0a3a1c70c130d65b84a0778a8b80db'
 var twilio = require('twilio')(accountSID, authToken);
 var app = express();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var http = require('http');
+var server = http.createServer(app);
+var io = require('socket.io')(server);
 
 // -------------------------------------------------------------
 // SET UP PUSHER
@@ -30,7 +31,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-// app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // /* GET home page. */
 // router.get('/', function(req, res) {
@@ -76,6 +77,6 @@ io.on('connection', function(socket) {
 
 // Open server on specified port
 console.log("Starting Express server");
-http.listen(process.env.PORT || 5001);
+server.listen(process.env.PORT || 5001);
 
 module.exports = app;
